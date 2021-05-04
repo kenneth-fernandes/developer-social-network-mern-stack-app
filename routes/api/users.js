@@ -1,12 +1,31 @@
 import express from 'express';
+import validatorPkg from 'express-validator';
+
+const { body, validationResult } = validatorPkg;
 
 export const usersRouter = express.Router();
 
 /**
- * @route GET api/users
- * @description TEST route
+ * @route POST api/users
+ * @description Register Users
  * @access Public
  */
-usersRouter.get('/', (req, res) => {
-  res.send('User route');
-});
+usersRouter.post(
+  '/',
+  [
+    body('name', 'Name is required').notEmpty(),
+    body('email', 'Please include a valid email').isEmail(),
+    body(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+  ],
+  (req, res) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    res.send('User route');
+  }
+);
