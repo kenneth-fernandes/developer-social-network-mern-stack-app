@@ -1,11 +1,12 @@
 import express from 'express';
-import validatorPkg from 'express-validator';
+
 import User from '../../models/Users.js';
 import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
 
+import validatorPkg from 'express-validator';
 const { body, validationResult } = validatorPkg;
 
 export const usersRouter = express.Router();
@@ -55,8 +56,6 @@ usersRouter.post(
       await user.save();
 
       // Return jsonwebtoken
-      //res.send('User Registered');
-
       const payload = {
         user: { id: user.id },
       };
@@ -69,6 +68,7 @@ usersRouter.post(
           if (error) {
             throw error;
           }
+          console.log(token);
 
           res.json({ token });
         }
