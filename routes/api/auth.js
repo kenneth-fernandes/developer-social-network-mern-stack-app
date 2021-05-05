@@ -12,8 +12,8 @@ export const authRouter = express.Router();
 
 /**
  * @route GET api/auth
- * @description TEST route
- * @access Public
+ * @description Retrieve user details using the jwt token
+ * @access Private
  */
 authRouter.get('/', auth, async (req, res) => {
   try {
