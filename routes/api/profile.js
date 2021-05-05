@@ -18,11 +18,13 @@ profileRouter.get('/me', auth, async (req, res) => {
     console.log(req.user.id);
     const profile = await Profile.findOne({
       user: req.user.id,
-    }).populate('user', ['name', 'avatar']);
+    }).populate('user', ['name', 'avatar', 'email']);
 
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for the user' });
     }
+
+    res.status(400).json(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
@@ -117,7 +119,7 @@ profileRouter.post(
         profile = await Profile.findOneAndUpdate(
           { user: req.user.id },
           { $set: profileFields },
-          { new: true, useFindAndModify: false }
+          { new: true }
         );
 
         return res.json(profile);
@@ -133,3 +135,50 @@ profileRouter.post(
     }
   }
 );
+
+/**
+ * @route GET api/profile
+ * @description Get all profiles
+ * @access Public
+ */
+profileRouter.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', [
+      'name',
+      'avatar',
+      'email',
+    ]);
+    if (!profiles) {
+      return res.status(400).json({ msg: 'There are no profiles' });
+    }
+
+    res.status(200).json(profiles);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+/**
+ * @route GET api/profile/user/:user_id
+ * @description Get profile by user ID
+ * @access Public
+ */
+profileRouter.get('/user/:user_id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatar', 'email']);
+    if (!profile) {
+      return res.status(400).json({ msg: 'There is no profile for this user' });
+    }
+
+    res.status(200).json(profile);
+  } catch (error) {
+    console.log(error.message);
+    if (error.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'There is no profile for this user' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
