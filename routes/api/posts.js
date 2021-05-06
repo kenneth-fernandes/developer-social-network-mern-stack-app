@@ -121,3 +121,71 @@ postsRouter.delete('/:id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+/**
+ * @route GET api/posts/like/:id
+ * @description Like a post
+ * @access Private
+ */
+postsRouter.put('/like/:id', auth, async (req, res) => {
+  try {
+    // Retrieve post by post id
+    const post = await Post.findById(req.params.id);
+
+    // Check if post has been liked already
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id).length >
+      0
+    ) {
+      return res.status(400).json({ msg: 'Post already liked' });
+    }
+    // Like the post
+    post.likes.unshift({ user: req.user.id });
+
+    // Save the data to DB
+    await post.save();
+
+    // Send response
+    res.json(post.likes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+/**
+ * @route DELETE api/posts/like/:id
+ * @description Unlike a post
+ * @access Private
+ */
+postsRouter.delete('/like/:id', auth, async (req, res) => {
+  try {
+    // Retrieve post by post id
+    const post = await Post.findById(req.params.id);
+
+    // Check if post has not been liked
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id)
+        .length === 0
+    ) {
+      return res.status(400).json({ msg: 'Post has not been liked' });
+    }
+
+    // Get remove index
+    const removeIndex = post.likes
+      .map((like) => like.user.toString())
+      .indexOf(req.user.id);
+
+    // Delete like from likes array
+    post.likes.splice(removeIndex, 1);
+
+    // Save the data to DB
+    await post.save();
+
+    // Send response
+    res.json(post.likes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});
