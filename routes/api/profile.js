@@ -4,6 +4,8 @@ export const profileRouter = express.Router();
 
 import Profile from '../../models/Profile.js';
 import User from '../../models/Users.js';
+import config from 'config';
+import axios from 'axios';
 
 import validatorPkg from 'express-validator';
 const { body, validationResult } = validatorPkg;
@@ -388,5 +390,30 @@ profileRouter.delete('/education/:edu_id', auth, async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server error');
+  }
+});
+
+/**
+ * @route GET api/profile/github/:username
+ * @description Get user repos from github
+ * @access Public
+ */
+profileRouter.get('/github/:username', async (req, res) => {
+  try {
+    const uri = encodeURI(
+      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+    );
+
+    const headers = {
+      'user-agent': 'node.js',
+      Authorization: `token ${config.get('githubToken')}`,
+    };
+
+    const gitHubResponse = await axios.get(uri, { headers });
+
+    res.json(gitHubResponse.data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
   }
 });
