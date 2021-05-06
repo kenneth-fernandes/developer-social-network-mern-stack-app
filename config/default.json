@@ -1,7 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://kennyferns:Welcome123@devnetwork.phisx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "jwtSecret" : "myscrettoken",
-    "githubClientId": "ca0a217410c6131e1416",
-    "githubSecretKey": "2acfb6832dc9af55509b2c3074e40b94ccad9687"
-
-}
