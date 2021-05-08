@@ -68,8 +68,6 @@ usersRouter.post(
           if (error) {
             throw error;
           }
-          console.log(token);
-
           res.json({ token });
         }
       );

@@ -63,7 +63,6 @@ authRouter.post(
           .status(400)
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
-      console.log(isMatch);
 
       // Signing the jwt token
       const payload = { user: { id: user.id } };
