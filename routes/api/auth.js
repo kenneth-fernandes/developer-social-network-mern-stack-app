@@ -17,7 +17,8 @@ export const authRouter = express.Router();
  */
 authRouter.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password').exec();
+    // Retireving user form db by user id deselecting the password
+    const user = await User.findById(req.user.id).select('-password');
 
     res.json(user);
   } catch (error) {

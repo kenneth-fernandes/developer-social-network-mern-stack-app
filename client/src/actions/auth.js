@@ -1,7 +1,30 @@
 import axios from 'axios';
 // Import setAlert action to display alerts on failure
 import { setAlert, steAlert } from './alert';
-import { REGISTER_SUCCESS, REGISTER_FAIL } from './types';
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  AUTH_ERROR,
+  USER_LOADED,
+} from './types';
+
+import setAuthToken from '../utilties/setAuthToken';
+
+// Load user
+export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    // Setting token to x-auth-token as header
+    setAuthToken(localStorage.token);
+  }
+  try {
+    // Response variable -  As proxy is http://domain we need not mention the whole path while firing axios request
+    const res = await axios.get('/api/auth');
+
+    dispatch({ type: USER_LOADED, payload: res.data });
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR });
+  }
+};
 
 // Register user
 export const register = ({ name, email, password }) => async (dispatch) => {
