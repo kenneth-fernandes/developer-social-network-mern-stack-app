@@ -1,6 +1,6 @@
 import axios from 'axios';
 // Import setAlert action to display alerts on failure
-import { setAlert, steAlert } from './alert';
+import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
