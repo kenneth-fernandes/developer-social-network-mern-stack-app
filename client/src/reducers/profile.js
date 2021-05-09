@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_PROILE:
-      console.log(payload);
       return { ...state, profile: payload, loading: false };
     case PROFILE_ERROR:
       return { ...state, error: payload, loading: false };
