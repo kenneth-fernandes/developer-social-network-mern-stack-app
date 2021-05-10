@@ -13,6 +13,7 @@ import PrivateRoute from '../routing/PrivateRoute';
 import CreateProfile from '../profile-form/CreateProfile';
 import EditProfile from '../profile-form/EditProfile';
 import Profiles from '../profiles/Profiles';
+import Profile from '../profile/Profile';
 
 const Routes = (props) => {
   const path = useLocation();
@@ -21,12 +22,12 @@ const Routes = (props) => {
     ''
   ) : (
     <section className='container'>
-      {/* <h1>{props}</h1> */}
       <Alert />
       <Switch>
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/profiles' component={Profiles} />
+        <Route exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />

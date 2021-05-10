@@ -176,7 +176,7 @@ profileRouter.get('/user/:user_id', async (req, res) => {
       return res.status(400).json({ msg: 'There is no profile for this user' });
     }
 
-    res.status(200).json(profile);
+    res.json(profile);
   } catch (error) {
     console.log(error.message);
     if (error.kind == 'ObjectId') {
