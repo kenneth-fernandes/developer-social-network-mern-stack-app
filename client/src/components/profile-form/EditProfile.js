@@ -68,7 +68,7 @@ const EditProfile = ({
           ? ''
           : profile.social.instagram,
     });
-  }, [loading, getCurrentProfile, profile]);
+  }, [loading, getCurrentProfile]);
   const {
     company,
     website,
