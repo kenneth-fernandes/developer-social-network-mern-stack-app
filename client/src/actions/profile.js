@@ -5,10 +5,12 @@ import setAuthToken from '../utilties/setAuthToken';
 
 import {
   CLEAR_PROFILE,
-  GET_PROILE,
+  GET_PROFILE,
   PROFILE_ERROR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
+  GET_PROFILES,
+  GET_REPOS,
 } from './types';
 
 // Get current users profile
@@ -21,7 +23,59 @@ export const getCurrentProfile = () => async (dispatch) => {
     // Get response of current logged in profile
     const res = await axios.get('/api/profile/me');
 
-    dispatch({ type: GET_PROILE, payload: res.data });
+    dispatch({ type: GET_PROFILE, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile');
+
+    dispatch({ type: GET_PROFILES, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get profile by id
+export const getProfiles = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({ type: GET_REPOS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get github repos
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({ type: GET_PROFILE, payload: res.data });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
@@ -34,7 +88,6 @@ export const getCurrentProfile = () => async (dispatch) => {
 };
 
 // Create or update a profile
-
 // history - Has a method push() that redirects to client side route
 export const createOrUpdateProfile = (
   formData,
@@ -52,7 +105,7 @@ export const createOrUpdateProfile = (
     // Get response to create profile
     const res = await axios.post('/api/profile', formData, config);
 
-    dispatch({ type: GET_PROILE, payload: res.data });
+    dispatch({ type: GET_PROFILE, payload: res.data });
     dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
 
     if (!edit) {
