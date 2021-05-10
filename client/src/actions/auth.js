@@ -12,14 +12,8 @@ import {
   CLEAR_PROFILE,
 } from './types';
 
-import setAuthToken from '../utilties/setAuthToken';
-
 // Load user
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    // Setting token to x-auth-token as header
-    setAuthToken(localStorage.token);
-  }
   try {
     // Response variable -  As proxy is http://domain we need not mention the whole path while firing axios request
     const res = await axios.get('/api/auth');

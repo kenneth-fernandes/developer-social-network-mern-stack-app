@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import setAuthToken from '../utilties/setAuthToken';
-
 import {
   CLEAR_PROFILE,
   GET_PROFILE,
@@ -16,10 +14,6 @@ import {
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    if (localStorage.token) {
-      // Setting token to x-auth-token as header
-      setAuthToken(localStorage.token);
-    }
     // Get response of current logged in profile
     const res = await axios.get('/api/profile/me');
 
