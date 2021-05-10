@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
@@ -15,7 +15,11 @@ import EditProfile from '../profile-form/EditProfile';
 import Profiles from '../profiles/Profiles';
 
 const Routes = (props) => {
-  return (
+  const path = useLocation();
+
+  return path.pathname === '/' ? (
+    ''
+  ) : (
     <section className='container'>
       {/* <h1>{props}</h1> */}
       <Alert />
