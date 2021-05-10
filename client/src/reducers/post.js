@@ -3,7 +3,6 @@ import { GET_POSTS, POST_ERROR } from '../actions/types';
 const initialState = { posts: [], post: null, loading: true, error: {} };
 
 const postReducer = (state = initialState, action) => {
-  console.log(state, action);
   const { type, payload } = action;
 
   switch (type) {
