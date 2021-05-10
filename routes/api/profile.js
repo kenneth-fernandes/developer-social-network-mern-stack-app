@@ -4,6 +4,7 @@ export const profileRouter = express.Router();
 
 import Profile from '../../models/Profile.js';
 import User from '../../models/Users.js';
+import Post from '../../models/Posts';
 import config from 'config';
 import axios from 'axios';
 
@@ -193,7 +194,8 @@ profileRouter.get('/user/:user_id', async (req, res) => {
 
 profileRouter.delete('/', auth, async (req, res) => {
   try {
-    //@todo - remove users posts
+    //remove users posts
+    await Post.deleteMany({ user: req.user.id });
 
     //Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });

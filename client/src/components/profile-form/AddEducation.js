@@ -105,7 +105,7 @@ const AddEducation = ({ addEducation, history }) => {
               value=''
               onChange={() => onCurrentJobChange()}
             />{' '}
-            Current Job
+            Current School
           </p>
         </div>
         <div class='form-group'>
