@@ -4,7 +4,7 @@ export const profileRouter = express.Router();
 
 import Profile from '../../models/Profile.js';
 import User from '../../models/Users.js';
-import Post from '../../models/Posts';
+import Post from '../../models/Posts.js';
 import config from 'config';
 import axios from 'axios';
 
@@ -155,7 +155,7 @@ profileRouter.get('/', async (req, res) => {
       return res.status(400).json({ msg: 'There are no profiles' });
     }
 
-    res.status(200).json(profiles);
+    res.json(profiles);
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
