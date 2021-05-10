@@ -25,6 +25,9 @@ export const getCurrentProfile = () => async (dispatch) => {
 
     dispatch({ type: GET_PROFILE, payload: res.data });
   } catch (error) {
+    // Added to sort out security flaw
+    dispatch({ type: CLEAR_PROFILE });
+
     dispatch({
       type: PROFILE_ERROR,
       payload: {

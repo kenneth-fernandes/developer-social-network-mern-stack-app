@@ -24,7 +24,7 @@ const profile = (state = initialState, action) => {
     case GET_PROFILES:
       return { ...state, profiles: payload, loading: false };
     case PROFILE_ERROR:
-      return { ...state, error: payload, loading: false };
+      return { ...state, error: payload, loading: false, profile: null };
     case CLEAR_PROFILE:
       return { ...state, profile: null, loading: false, repos: [] };
     case GET_REPOS:
