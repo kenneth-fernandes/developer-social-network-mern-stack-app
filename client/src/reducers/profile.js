@@ -15,7 +15,7 @@ const initialState = {
   error: {},
 };
 
-export default (state = initialState, action) => {
+const profile = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case UPDATE_PROFILE:
@@ -33,3 +33,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default profile;
