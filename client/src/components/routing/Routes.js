@@ -4,7 +4,7 @@ import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
-import AddExperience from '../profile-form/AddEducation';
+import AddExperience from '../profile-form/AddExperince';
 import AddEducation from '../profile-form/AddEducation';
 // import Posts from '../posts/Posts';
 // import Post from '../post/Post';
