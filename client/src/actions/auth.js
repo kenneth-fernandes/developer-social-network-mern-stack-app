@@ -12,9 +12,16 @@ import {
   CLEAR_PROFILE,
 } from './types';
 
+import setAuthToken from '../utilties/setAuthToken';
+
 // Load user
 export const loadUser = () => async (dispatch) => {
   try {
+    if (localStorage.token) {
+      // Setting token to x-auth-token as header
+
+      setAuthToken(localStorage.token);
+    }
     // Response variable -  As proxy is http://domain we need not mention the whole path while firing axios request
     const res = await axios.get('/api/auth');
 
@@ -37,6 +44,10 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   const body = JSON.stringify({ name, email, password });
 
   try {
+    if (localStorage.token) {
+      // Setting token to x-auth-token as header
+      setAuthToken(localStorage.token);
+    }
     // Response variable -  As proxy is http://domain we need not mention the whole path while firing axios request
     const res = await axios.post('/api/users', body, config);
 
