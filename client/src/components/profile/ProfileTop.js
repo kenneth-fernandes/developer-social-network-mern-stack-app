@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import defaultImg from '../../images/default.png';
+
 const ProfileTop = ({
   profile: {
     status,
@@ -14,7 +16,11 @@ const ProfileTop = ({
 }) => {
   return (
     <div className='profile-top bg-primary p-2'>
-      <img className='round-img my-1' src={avatar} alt={name} />
+      <img
+        className='round-img my-1'
+        src={avatar ? avatar : defaultImg}
+        alt={name}
+      />
 
       <h1>{name}</h1>
       <p>

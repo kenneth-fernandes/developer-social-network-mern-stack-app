@@ -32,7 +32,7 @@ usersRouter.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
     try {
       // Check if user exist
       let user = await User.findOne({ email });
@@ -42,9 +42,6 @@ usersRouter.post(
           .status(400)
           .json({ errors: [{ msg: 'User already exits' }] });
       }
-
-      // Retrieve users gravatar
-      const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
 
       user = new User({ name, email, avatar, password });
 

@@ -6,6 +6,8 @@ import { Fragment } from 'react';
 import Moment from 'react-moment';
 import { addLike, removeLike, deletePost } from '../../actions/post';
 
+import defaultImg from '../../images/default.png';
+
 const PostItem = ({
   deletePost,
   addLike,
@@ -18,7 +20,11 @@ const PostItem = ({
     <div className='post bg-white my-1 p-1'>
       <div>
         <Link to={`/profile/${user}`}>
-          <img className='round-img' src={avatar} alt={name} />
+          <img
+            className='round-img'
+            src={avatar ? avatar : defaultImg}
+            alt={name}
+          />
           <h4>{name}</h4>
         </Link>
       </div>

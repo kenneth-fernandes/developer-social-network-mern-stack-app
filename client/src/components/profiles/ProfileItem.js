@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import defaultImg from '../../images/default.png';
+
 const ProfileItem = ({
   profile: {
     user: { _id, name, avatar },
@@ -13,7 +15,11 @@ const ProfileItem = ({
 }) => {
   return (
     <div className='profile bg-light'>
-      <img src={avatar} alt={name} className='round-img' />
+      <img
+        src={avatar ? avatar : defaultImg}
+        alt={name}
+        className='round-img'
+      />
       <div>
         <h2>{name}</h2>
         <p>

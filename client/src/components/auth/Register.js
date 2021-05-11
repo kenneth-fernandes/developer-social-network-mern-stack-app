@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import FileBase from 'react-file-base64';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -13,9 +14,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     email: '',
     password: '',
     password2: '',
+    avatar: '',
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2, avatar } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,7 +28,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger', 4000);
     } else {
-      register({ name, email, password });
+      register({ name, email, password, avatar });
     }
   };
 
@@ -61,9 +63,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             className='text'
             placeholder='Email Address'
           />
+        </div>
+        <div className='form-group'>
+          <FileBase
+            type='file'
+            multiple={false}
+            onDone={({ base64 }) =>
+              setFormData({ ...formData, avatar: base64 })
+            }
+          />
           <small className='form-text'>
-            This site uses a Gravatar, so if you want a profile image, user a
-            Gravatar email
+            Upload image for profile (Image size: Less than 25 MB)
           </small>
         </div>
         <div className='form-group'>

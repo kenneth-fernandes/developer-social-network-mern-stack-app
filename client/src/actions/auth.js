@@ -32,7 +32,9 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = ({ name, email, password, avatar }) => async (
+  dispatch
+) => {
   // Create the config with headers for the REST call
   const config = {
     headers: {
@@ -41,7 +43,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   };
 
   // Create the body componenet
-  const body = JSON.stringify({ name, email, password });
+  const body = JSON.stringify({ name, email, password, avatar });
 
   try {
     if (localStorage.token) {

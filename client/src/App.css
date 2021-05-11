@@ -247,6 +247,7 @@ table {
 .form input[type='email'],
 .form input[type='password'],
 .form input[type='date'],
+.form input[type='file'],
 .form select,
 .form textarea {
   display: block;

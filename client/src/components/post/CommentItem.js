@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { deleteComment } from '../../actions/post';
+import defaultImg from '../../images/default.png';
 
 const CommentItem = ({
   comment: { _id, text, name, avatar, user, date },
@@ -15,7 +16,11 @@ const CommentItem = ({
     <div class='post bg-white my-1 p-1'>
       <div>
         <Link to={`/profile/${user}`}>
-          <img class='round-img' src={avatar} alt={name} />
+          <img
+            class='round-img'
+            src={avatar ? avatar : defaultImg}
+            alt={name}
+          />
           <h4>{name}</h4>
         </Link>
       </div>
