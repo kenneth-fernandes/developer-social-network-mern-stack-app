@@ -430,6 +430,21 @@ img {
 .post img {
   width: 150px;
 }
+
+.post .comment-count {
+  background: #f4f4f4;
+  color: #ca902b;
+  padding: 0.1rem 0.2rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+.post .post-date {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
 @media (max-width: 700px) {
   .hide-sm {
     display: none;
