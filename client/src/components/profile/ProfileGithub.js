@@ -3,20 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getGithubRepos } from '../../actions/profile';
+import { Fragment } from 'react';
 
-const ProfileGithub = ({ username, getGithubRepos, repos }) => {
+const ProfileGithub = ({ username, getGithubRepos, repos, loading }) => {
   useEffect(() => {
     getGithubRepos(username);
   }, [getGithubRepos]);
 
-  return (
+  const finalElem = (
     <div className='profile-github'>
       <h2 className='text-primary my-1'>
         <i className='fab fa-github'></i>Github Repos
       </h2>
-      {repos === null ? (
-        <Spinner />
-      ) : (
+      {repos.length > 0 ? (
         repos.map((repo) => (
           <div key={repo._id} className='repo bg-white my-1 p-1'>
             <div>
@@ -44,9 +43,12 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
             </div>
           </div>
         ))
+      ) : (
+        <h4>Could not find repos for this user - "{username}"</h4>
       )}
     </div>
   );
+  return repos === null ? <Spinner /> : finalElem;
 };
 
 ProfileGithub.propTypes = {
@@ -57,6 +59,7 @@ ProfileGithub.propTypes = {
 
 const mapStateToProps = (state) => ({
   repos: state.profile.repos,
+  loading: state.profile.loading,
 });
 
 export default connect(mapStateToProps, { getGithubRepos })(ProfileGithub);

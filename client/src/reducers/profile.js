@@ -5,6 +5,7 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   GET_REPOS,
+  REPOS_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +26,8 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, profiles: payload, loading: false };
     case PROFILE_ERROR:
       return { ...state, error: payload, loading: false, profile: null };
+    case REPOS_ERROR:
+      return { ...state, error: payload, repos: [], loading: false };
     case CLEAR_PROFILE:
       return { ...state, profile: null, loading: false, repos: [] };
     case GET_REPOS:
