@@ -5,6 +5,7 @@ import { setAlert } from './alert';
 import {
   ADD_POST,
   DELETE_POSTS,
+  GET_POST,
   GET_POSTS,
   POST_ERROR,
   UPDATE_LIKES,
@@ -20,7 +21,6 @@ export const getPosts = () => async (dispatch) => {
     dispatch({ type: GET_POSTS, payload: res.data });
   } catch (error) {
     // Dispatch error
-    console.log(error);
     dispatch({
       type: POST_ERROR,
       payload: {
@@ -116,6 +116,26 @@ export const deletePost = (postId) => async (dispatch) => {
   } catch (error) {
     // Dispatch error
 
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get Posts
+export const getPostById = (postId) => async (dispatch) => {
+  try {
+    // Get all posts
+    const res = await axios.get(`/api/posts/${postId}`);
+
+    // Dispatch the response
+    dispatch({ type: GET_POST, payload: res.data });
+  } catch (error) {
+    // Dispatch error
     dispatch({
       type: POST_ERROR,
       payload: {
