@@ -123,7 +123,7 @@ postsRouter.delete('/:id', auth, async (req, res) => {
 });
 
 /**
- * @route GET api/posts/like/:id
+ * @route PUT api/posts/like/:id
  * @description Like a post
  * @access Private
  */
