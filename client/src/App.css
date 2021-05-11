@@ -66,6 +66,9 @@
   margin-top: 6rem;
   margin-bottom: 3rem;
 }
+table {
+  margin-right: 0;
+}
 .x-large {
   font-size: 4rem;
   line-height: 1.2;
@@ -298,7 +301,7 @@ ul {
   list-style: none;
 }
 img {
-  width: 100%;
+  width: 75%;
 }
 .navbar {
   display: flex;
@@ -428,7 +431,7 @@ img {
   text-align: center;
 }
 .post img {
-  width: 150px;
+  width: 100px;
 }
 
 .post .comment-count {
@@ -484,6 +487,7 @@ img {
   .profile ul {
     display: none;
   }
+
   .profile-grid {
     grid-template-areas: 'top' 'about' 'exp' 'edu' 'github';
   }
