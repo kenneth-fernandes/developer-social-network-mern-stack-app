@@ -3,6 +3,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 import {
+  ADD_POST,
   DELETE_POSTS,
   GET_POSTS,
   POST_ERROR,
@@ -59,7 +60,36 @@ export const removeLike = (postId) => async (dispatch) => {
 
     // Dispatch the response
     dispatch({ type: UPDATE_LIKES, payload: { id: postId, likes: res.data } });
-    console.log(res.data);
+  } catch (error) {
+    // Dispatch error
+
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Add post
+export const addPost = (formData) => async (dispatch) => {
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    // Get created post data
+    const res = await axios.post('/api/posts', formData, config);
+
+    // Dispatch the response
+    dispatch({ type: ADD_POST, payload: res.data });
+
+    // Dispatch alert
+    dispatch(setAlert('Post Created', 'success'));
   } catch (error) {
     // Dispatch error
 
@@ -76,7 +106,6 @@ export const removeLike = (postId) => async (dispatch) => {
 // Delete post
 export const deletePost = (postId) => async (dispatch) => {
   try {
-    console.log(postId);
     // Delete a post
     const res = await axios.delete(`/api/posts/${postId}`);
     console.log(res);
