@@ -1,9 +1,11 @@
 import {
+  ADD_COMMENT,
   ADD_POST,
   DELETE_POSTS,
   GET_POST,
   GET_POSTS,
   POST_ERROR,
+  REMOVE_COMMENT,
   UPDATE_LIKES,
 } from '../actions/types';
 
@@ -45,6 +47,23 @@ const postReducer = (state = initialState, action) => {
         posts: state.posts.map((post) =>
           post._id === payload.id ? { ...post, likes: payload.likes } : post
         ),
+        loading: false,
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
+        loading: false,
+      };
+    case REMOVE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.ffilter(
+            (comment) => comment._id !== payload
+          ),
+        },
         loading: false,
       };
     default:
