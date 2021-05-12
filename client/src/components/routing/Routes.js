@@ -13,6 +13,7 @@ import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
+import NotFound from '../layout/NotFound';
 
 const Routes = (props) => {
   const path = useLocation();
@@ -34,6 +35,7 @@ const Routes = (props) => {
         <PrivateRoute exact path='/add-education' component={AddEducation} />
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/post/:id' component={Post} />
+        <Route component={NotFound} />
       </Switch>
     </section>
   );
