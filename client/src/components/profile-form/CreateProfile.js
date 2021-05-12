@@ -7,7 +7,12 @@ import defaultImg from '../../images/default.png';
 import FileBase from 'react-file-base64';
 import { updateAvatar } from '../../actions/user';
 
-const CreateProfile = ({ createOrUpdateProfile, history, auth }) => {
+const CreateProfile = ({
+  createOrUpdateProfile,
+  history,
+  auth,
+  updateAvatar,
+}) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -258,6 +263,7 @@ const CreateProfile = ({ createOrUpdateProfile, history, auth }) => {
 };
 
 CreateProfile.propTypes = {
+  updateAvatar: PropTypes.func.isRequired,
   createOrUpdateProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
