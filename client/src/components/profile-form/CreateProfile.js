@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createOrUpdateProfile } from '../../actions/profile';
+import defaultImg from '../../images/default.png';
+import FileBase from 'react-file-base64';
+import { updateAvatar } from '../../actions/user';
 
-const CreateProfile = ({ createOrUpdateProfile, history }) => {
+const CreateProfile = ({ createOrUpdateProfile, history, auth }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -43,6 +46,10 @@ const CreateProfile = ({ createOrUpdateProfile, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (formData.avatar !== defaultImg) {
+      updateAvatar(formData, auth.user._id);
+      auth.user.avatar = formData.avatar;
+    }
     createOrUpdateProfile(formData, history);
   };
 
@@ -60,6 +67,31 @@ const CreateProfile = ({ createOrUpdateProfile, history }) => {
           onSubmit(e);
         }}
       >
+        <div className='form-group'>
+          <div className='edit-profile profile'>
+            <img
+              src={
+                auth && auth.user && auth.user.avatar
+                  ? auth.user.avatar
+                  : defaultImg
+              }
+              alt={auth && auth.user && auth.user.avatar}
+              className='round-img'
+            />
+            <div>
+              <FileBase
+                type='file'
+                multiple={false}
+                onDone={({ base64 }) =>
+                  setFormData({ ...formData, avatar: base64 })
+                }
+              />
+              <small className='form-text'>
+                Upload image for profile (Image size: Less than 25 MB)
+              </small>
+            </div>
+          </div>
+        </div>
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -227,8 +259,13 @@ const CreateProfile = ({ createOrUpdateProfile, history }) => {
 
 CreateProfile.propTypes = {
   createOrUpdateProfile: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createOrUpdateProfile })(
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { createOrUpdateProfile })(
   withRouter(CreateProfile)
 );

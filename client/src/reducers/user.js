@@ -7,7 +7,6 @@ const userReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case UPDATE_USER_AVATAR:
-      console.log(payload);
       return { ...state, loading: false, auth: { user: payload } };
     case ERROR_USER_AVATAR:
       return { ...state, loading: false };
