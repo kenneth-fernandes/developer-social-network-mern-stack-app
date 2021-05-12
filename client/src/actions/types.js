@@ -23,3 +23,5 @@ export const ADD_POST = 'ADD_POST';
 export const GET_POST = 'GET_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+export const UPDATE_USER_AVATAR = 'UPDATE_USER_AVATAR';
+export const ERROR_USER_AVATAR = 'ERROR_USER_AVATAR';

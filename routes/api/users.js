@@ -5,6 +5,7 @@ import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
+import auth from '../../middleware/auth.js';
 
 import validatorPkg from 'express-validator';
 const { body, validationResult } = validatorPkg;
@@ -74,3 +75,28 @@ usersRouter.post(
     }
   }
 );
+
+/**
+ * @route PUT api/users/:user_id
+ * @description Update avatar
+ * @access Private
+ */
+usersRouter.post('/:user_id', auth, async (req, res) => {
+  try {
+    console.log('1 - ', req.params.user_id);
+    // Retrieve user by user id
+
+    const user = await User.findById(req.params.user_id);
+    const { avatar } = req.body;
+
+    user.avatar = avatar;
+    // Save the data to DB
+    await user.save();
+
+    // Send response
+    res.json(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});

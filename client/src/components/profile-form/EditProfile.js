@@ -6,14 +6,20 @@ import {
   createOrUpdateProfile,
   getCurrentProfile,
 } from '../../actions/profile';
+import { updateAvatar } from '../../actions/user';
+import defaultImg from '../../images/default.png';
+import FileBase from 'react-file-base64';
 
 const EditProfile = ({
+  auth,
   profile: { profile, loading },
   createOrUpdateProfile,
   getCurrentProfile,
+  updateAvatar,
   history,
 }) => {
   const [formData, setFormData] = useState({
+    avatar: '',
     company: '',
     website: '',
     location: '',
@@ -34,6 +40,7 @@ const EditProfile = ({
     getCurrentProfile();
 
     setFormData({
+      avatar: loading || auth.user.avatar ? defaultImg : auth.user.avatar,
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
@@ -90,6 +97,10 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (formData.avatar !== defaultImg) {
+      updateAvatar(formData, auth.user._id);
+      auth.user.avatar = formData.avatar;
+    }
     createOrUpdateProfile(formData, history, true);
   };
 
@@ -107,6 +118,31 @@ const EditProfile = ({
           onSubmit(e);
         }}
       >
+        <div className='form-group'>
+          <div className='edit-profile profile'>
+            <img
+              src={
+                auth && auth.user && auth.user.avatar
+                  ? auth.user.avatar
+                  : defaultImg
+              }
+              alt={auth && auth.user && auth.user.avatar}
+              className='round-img'
+            />
+            <div>
+              <FileBase
+                type='file'
+                multiple={false}
+                onDone={({ base64 }) =>
+                  setFormData({ ...formData, avatar: base64 })
+                }
+              />
+              <small className='form-text'>
+                Upload image for profile (Image size: Less than 25 MB)
+              </small>
+            </div>
+          </div>
+        </div>
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -273,16 +309,20 @@ const EditProfile = ({
 };
 
 EditProfile.propTypes = {
+  updateAvatar: PropTypes.func.isRequired,
   createOrUpdateProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
   createOrUpdateProfile,
   getCurrentProfile,
+  updateAvatar,
 })(withRouter(EditProfile));

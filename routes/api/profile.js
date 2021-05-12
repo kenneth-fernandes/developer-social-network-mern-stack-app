@@ -94,7 +94,6 @@ profileRouter.post(
         profileFields.githubusername = githubusername;
       }
       if (skills) {
-        console.log('server ', skills);
         profileFields.skills = skills.split(',').map((skill) => skill.trim());
       }
 
@@ -234,15 +233,8 @@ profileRouter.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      title,
-      company,
-      location,
-      from,
-      to,
-      current,
-      description,
-    } = req.body;
+    const { title, company, location, from, to, current, description } =
+      req.body;
 
     const newExp = {
       title,
@@ -326,15 +318,8 @@ profileRouter.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      school,
-      degree,
-      fieldofstudy,
-      from,
-      to,
-      current,
-      description,
-    } = req.body;
+    const { school, degree, fieldofstudy, from, to, current, description } =
+      req.body;
 
     const newEdu = {
       school,

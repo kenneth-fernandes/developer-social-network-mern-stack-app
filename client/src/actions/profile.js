@@ -55,7 +55,7 @@ export const getProfiles = () => async (dispatch) => {
 export const getGithubRepos = (username) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/profile/github/${username}`);
-    console.log(res.data);
+
     dispatch({
       type: GET_REPOS,
       payload: res.data,
@@ -87,46 +87,46 @@ export const getProfileById = (userId) => async (dispatch) => {
 
 // Create or update a profile
 // history - Has a method push() that redirects to client side route
-export const createOrUpdateProfile = (
-  formData,
-  history,
-  edit = false
-) => async (dispatch) => {
-  try {
-    // Create the config with headers for the REST call
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+export const createOrUpdateProfile =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      // Create the config with headers for the REST call
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    // Get response to create profile
-    const res = await axios.post('/api/profile', formData, config);
+      // Get response to create profile
+      const res = await axios.post('/api/profile', formData, config);
 
-    dispatch({ type: GET_PROFILE, payload: res.data });
-    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+      dispatch({ type: GET_PROFILE, payload: res.data });
+      dispatch(
+        setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success')
+      );
 
-    if (!edit) {
-      history.push('/dashboard');
-    }
-  } catch (error) {
-    // Get the list of errors
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((error) => {
-        // Dispatch to setAlert for each error
-        dispatch(setAlert(error.msg, 'danger'));
+      if (!edit) {
+        history.push('/dashboard');
+      }
+    } catch (error) {
+      // Get the list of errors
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => {
+          // Dispatch to setAlert for each error
+          dispatch(setAlert(error.msg, 'danger'));
+        });
+      }
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: error.response.statusText,
+          status: error.response.status,
+        },
       });
     }
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
-    });
-  }
-};
+  };
 
 // Add Experience
 export const addExperience = (formData, history) => async (dispatch) => {

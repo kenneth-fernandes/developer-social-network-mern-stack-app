@@ -110,7 +110,7 @@ export const deletePost = (postId) => async (dispatch) => {
   try {
     // Delete a post
     const res = await axios.delete(`/api/posts/${postId}`);
-    console.log(res);
+
     // Dispatch the response
     dispatch({ type: DELETE_POSTS, payload: postId });
 
