@@ -272,6 +272,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { createOrUpdateProfile })(
-  withRouter(CreateProfile)
-);
+export default connect(mapStateToProps, {
+  createOrUpdateProfile,
+  updateAvatar,
+})(withRouter(CreateProfile));
