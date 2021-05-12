@@ -302,7 +302,7 @@ ul {
   list-style: none;
 }
 img {
-  width: 75%;
+  width: 100;
 }
 .navbar {
   display: flex;
@@ -432,7 +432,7 @@ img {
   text-align: center;
 }
 .post img {
-  width: 100px;
+  width: 150px;
 }
 
 .post .comment-count {
