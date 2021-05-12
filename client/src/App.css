@@ -302,7 +302,7 @@ ul {
   list-style: none;
 }
 img {
-  width: 100;
+  width: 100%;
 }
 .navbar {
   display: flex;
